@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'Accueil</title>
+    {% load static %}  <!-- Charge le tag static -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"> <!-- Lien vers le fichier CSS -->
+</head>
+<body>
+    {% block content %}
+        <h1>Mion entreprise</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <li><a href="{% url 'commande' %}">Nouvelle commande</a></li>
+            <li><a href="{% url 'contact' %}">Nouveau client</a></li>
+            <li><a href="{% url 'creer_commande' %}">Créer une nouvelle commande</a></li>
+            <li><a href="{% url 'planning' %}">planning</a></li>
+        </form>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes en cours</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1c40f;
+            color: #fff;
+        }
+
+        td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des commandes en cours</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>N°Commande</th>
+                <th>Date Commande</th>
+                <th>Date Livraison Prévue</th>
+                <th>Date Début Montage</th>
+                <th>Écart (jours)</th>
+                <th>État</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in commandes %}
+            <tr>
+                <td>{{ item.commande.id }}</td>
+                <td>{{ item.commande.date_commande }}</td>
+                <td>{{ item.commande.date_livraison_prevue }}</td>
+                <td>{{ item.commande.date_debut_montage }}</td>
+                <td>{{ item.ecart }}</td>
+                <td>{{ item.etat }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+</body>
+
+    <!-- Section: Commandes terminées avec temps théorique et réel -->
+    <h2>Commandes terminées</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Temps Théorique (h)</th>
+                <th>Temps Réel (h)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes_terminees %}
+            <tr>
+                <td>{{ commande.commande.id }}</td>
+                <td>{{ commande.temps_theorique }}</td>
+                <td>{{ commande.temps_reel }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Section: Moyenne mensuelle du ratio temps réel / temps théorique -->
+    <h2>Moyenne mensuelle du ratio temps réel / temps théorique</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Mois</th>
+                <th>Ratio Moyen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mois, ratio in ratios_mensuels.items %}
+            <tr>
+                <td>{{ mois }}</td>
+                <td>{{ ratio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Section: Ratio par type de benne -->
+    <h2>Ratio temps réel / temps théorique par type de benne</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Type de Benne</th>
+                <th>Ratio Moyen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type_benne, ratio in ratios_par_benne.items %}
+            <tr>
+                <td>{{ type_benne }}</td>
+                <td>{{ ratio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

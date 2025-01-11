@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout d'un Temps de Travail</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Ajouter un Temps de Travail</h1>
+        <form method="POST" class="bg-light p-4 shadow rounded">
+            {% csrf_token %}
+
+            <!-- Section Commande -->
+            <div class="mb-4">
+                <h2 class="mb-3">Commande</h2>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="commande" class="form-label">Commande :</label>
+                        <select id="commande" name="commande" class="form-select">
+                            {% for cmd in commandes %}
+                                <option value="{{ cmd.id }}">{{ cmd }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Opérateurs -->
+            <div class="mb-4">
+                <h2 class="mb-3">Opérateurs</h2>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="operateur_principal" class="form-label">Opérateur principal :</label>
+                        <select id="operateur_principal" name="operateur_principal" class="form-select">
+                            {% for operateur in operateurs %}
+                                <option value="{{ operateur.id }}">{{ operateur }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operateur_secondaire" class="form-label">Opérateur secondaire :</label>
+                        <select id="operateur_secondaire" name="operateur_secondaire" class="form-select">
+                            <option value="">-- Aucun --</option>
+                            {% for operateur in operateurs %}
+                                <option value="{{ operateur.id }}">{{ operateur }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operateur_2" class="form-label">Opérateur 2 :</label>
+                        <select id="operateur_2" name="operateur_2" class="form-select">
+                            <option value="">-- Aucun --</option>
+                            {% for operateur in operateurs %}
+                                <option value="{{ operateur.id }}">{{ operateur }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operateur_3" class="form-label">Opérateur 3 :</label>
+                        <select id="operateur_3" name="operateur_3" class="form-select">
+                            <option value="">-- Aucun --</option>
+                            {% for operateur in operateurs %}
+                                <option value="{{ operateur.id }}">{{ operateur }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Temps -->
+            <div class="mb-4">
+                <h2 class="mb-3">Temps</h2>
+                <div class="row g-3">
+                    <!-- Temps Option Standard -->
+                    <div class="col-md-6">
+                        <label for="tps_option_standard" class="form-label">Temps option standard :</label>
+                        <ul>
+                            {% for option in options %}
+                                <li>{{ option.tps_option_standard }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tps_option_reel" class="form-label">Temps option réel :</label>
+                        <input type="number" id="tps_option_reel" name="tps_option_reel" step="0.01" class="form-control">
+                    </div>
+
+                    <!-- Temps Montage Standard -->
+                    <div class="col-md-6">
+                        <label for="tps_montage_standard" class="form-label">Temps montage standard :</label>
+                        <ul>
+                            {% for benne in bennes_montage %}
+                                <li>{{ benne.tps_montage_standard }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tps_montage_reel" class="form-label">Temps montage réel :</label>
+                        <input type="number" id="tps_montage_reel" name="tps_montage_reel" step="0.01" class="form-control">
+                    </div>
+
+                    <!-- Temps Peinture Standard -->
+                    <div class="col-md-6">
+                        <label for="tps_peinture_standard" class="form-label">Temps peinture standard :</label>
+                        <ul>
+                            {% for benne in bennes_peinture %}
+                                <li>{{ benne.tps_peinture_standard }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tps_peinture_reel" class="form-label">Temps peinture réel :</label>
+                        <input type="number" id="tps_peinture_reel" name="tps_peinture_reel" step="0.01" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
